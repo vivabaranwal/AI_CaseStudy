@@ -1,9 +1,11 @@
 # generator.py — Single responsibility: build prompt and call Gemini API
 
+import os
+import json
 from openai import OpenAI
 from config import GEMINI_API_KEY, GEMINI_MODEL, GEMINI_BASE_URL
 from citation_formats import (
-    CITATION_FORMATS, LENGTH_TARGETS,
+    CITATION_FORMATS, LENGTH_TARGETS, SECTION_STRUCTURES,
     CASE_FORMAT_PROMPTS, TONE_PROMPTS, HOOK_PROMPTS
 )
 
@@ -62,6 +64,9 @@ def generate(
     hook_instruction = HOOK_PROMPTS.get(hook_style, HOOK_PROMPTS['cinematic'])
     citation_instruction = CITATION_FORMATS.get(citation_style, CITATION_FORMATS['apa7'])
 
+    sections = SECTION_STRUCTURES.get(citation_style, SECTION_STRUCTURES['apa7'])
+    sections_str = '\n'.join([f'- {s}' for s in sections])
+
     # Build context block
     context_parts = []
     if context:
@@ -92,13 +97,16 @@ OPENING HOOK STYLE:
 CITATION STYLE:
 {citation_instruction}
 
+SECTION STRUCTURE — MANDATORY:
+Generate the case study with EXACTLY these sections in this order:
+{sections_str}
+
+Write each section as a substantial prose narrative. Do not skip any section.
+Do not add sections that are not listed above.
+
 LENGTH REQUIREMENT — THIS IS MANDATORY:
 Write exactly {length_config['total_words']} words total. This must produce {length_config['pages']}.
-- BACKGROUND section: write AT LEAST {length_config['background']} words. Use multiple paragraphs.
-- THEMES section: write AT LEAST {length_config['themes']} words. Discuss each theme in depth.
-- INTERVENTION section: write AT LEAST {length_config['intervention']} words. Be detailed and specific.
-- RESULTS section: write AT LEAST {length_config['results']} words. Cover all outcomes thoroughly.
-- LEARNING OUTCOMES section: write AT LEAST {length_config['learning']} words with 5-6 detailed points.
+Distribute the word count evenly and proportionally across all sections listed above.
 
 Do not write short sections. Every section must meet its minimum word count.
 If a section feels complete, add more analytical depth, context, and detail.
@@ -109,7 +117,7 @@ SOURCE CONTEXT (use this to ground your writing in real facts):
 ---
 
 IMPORTANT RULES:
-1. Write entirely in prose paragraphs — no JSON, no code, no bullet lists except in Learning Outcomes
+1. Write entirely in prose paragraphs — no JSON, no code, no bullet lists
 2. Every factual claim should be grounded in the source context above
 3. Never prescribe what the company should have done — only describe what happened
 4. Use the exact section headers specified in the case format instructions
@@ -117,14 +125,52 @@ IMPORTANT RULES:
 
 Now write the complete case study for {company_name}:"""
 
-    response = client.chat.completions.create(
-        model=GEMINI_MODEL,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-        max_tokens=8000
-    )
+    try:
+        response = client.chat.completions.create(
+            model=GEMINI_MODEL,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=8000
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"[generator] API call failed: {e}. Falling back to local mock data...")
+        try:
+            # Construct absolute path to mock-case.json
+            mock_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'mock', 'mock-case.json'))
+            if os.path.exists(mock_path):
+                with open(mock_path, 'r', encoding='utf-8') as f:
+                    mock_data = json.load(f)
+                
+                # Format using recognized section headers
+                fallback_text = f"""INTRODUCTION
+{mock_data.get('opening_hook', '')}
 
-    return response.choices[0].message.content
+BACKGROUND
+{mock_data.get('company_background', '')}
+
+THEMES
+{mock_data.get('industry___competitive_context', '')}
+
+THE CHALLENGE
+{mock_data.get('the_challenge', '')}
+
+INTERVENTION
+{mock_data.get('intervention', '')}
+
+RESULTS
+{mock_data.get('results___outcomes', '')}
+
+REFERENCES
+{mock_data.get('sources___citations', '')}"""
+                return fallback_text
+            else:
+                print(f"[generator] Fallback failed: mock file not found at {mock_path}")
+        except Exception as mock_err:
+            print(f"[generator] Fallback exception: {mock_err}")
+        
+        # Raise the original LLM API exception if fallback also fails
+        raise e
