@@ -7,15 +7,36 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 import os
 import re
+from datetime import datetime
 from config import OUTPUTS_DIR
 
 SECTION_HEADERS = [
-    'BACKGROUND', 'THEMES', 'INTERVENTION', 'RESULTS',
-    'LEARNING OUTCOMES', 'INDUSTRY CONTEXT', 'THE CHALLENGE',
-    'COMPETITIVE LANDSCAPE', 'THE DECISION', 'ANALYSIS',
-    'INTRODUCTION', 'COMPANY OVERVIEW', 'INDUSTRY ANALYSIS',
-    'THE PROBLEM', 'STRATEGIC OPTIONS', 'OUTCOMES',
-    'DISCUSSION QUESTIONS', 'EXHIBITS', 'TEACHING NOTE',
+    'BACKGROUND',
+    'CHALLENGE',
+    'THEMES',
+    'ROOT CAUSE ANALYSIS',
+    'INTERVENTION / APPROACH',
+    'INTERVENTION',
+    'APPROACH',
+    'IMPLEMENTATION',
+    'RESULTS AND IMPACT',
+    'RESULTS',
+    'RECOMMENDATIONS',
+    'FUTURE SCOPE',
+    'INDUSTRY CONTEXT',
+    'THE CHALLENGE',
+    'COMPETITIVE LANDSCAPE',
+    'THE DECISION',
+    'ANALYSIS',
+    'INTRODUCTION',
+    'COMPANY OVERVIEW',
+    'INDUSTRY ANALYSIS',
+    'THE PROBLEM',
+    'STRATEGIC OPTIONS',
+    'OUTCOMES',
+    'DISCUSSION QUESTIONS',
+    'EXHIBITS',
+    'TEACHING NOTE',
     'REFERENCES'
 ]
 
@@ -187,10 +208,136 @@ def export(company_name: str, case_text: str, citation_style: str = 'apa7') -> s
         r.font.italic = True
         r.font.color.rgb = RGBColor(0xAA, 0xAA, 0xAA)
 
+    # Save — timestamp suffix prevents Windows file-lock errors on repeated generation
+    os.makedirs(OUTPUTS_DIR, exist_ok=True)
+    safe_name = re.sub(r'[^\w\s-]', '', company_name).strip().replace(' ', '_')
+    timestamp = datetime.now().strftime("%H%M%S")
+    path = os.path.join(OUTPUTS_DIR, f'{safe_name}_{timestamp}_case_study.docx')
+    doc.save(path)
+    print(f"[exporter] Saved: {path}")
+    return path
+
+
+def export_teaching_note(
+    company_name: str,
+    teaching_content: str,
+    citation_style: str = 'apa7'
+) -> str:
+    """
+    Export teaching note as a clean Word document.
+    Uses only basic python-docx operations — no custom XML — to avoid corruption.
+    """
+    doc = Document()
+
+    # Page setup
+    for section in doc.sections:
+        section.top_margin = Inches(1.0)
+        section.bottom_margin = Inches(1.0)
+        section.left_margin = Inches(1.25)
+        section.right_margin = Inches(1.25)
+
+    # Title block
+    title = doc.add_paragraph()
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    title.paragraph_format.space_before = Pt(12)
+    title.paragraph_format.space_after = Pt(4)
+    title_run = title.add_run(f'{company_name.upper()} — TEACHING NOTE')
+    title_run.font.name = 'Times New Roman'
+    title_run.font.size = Pt(16)
+    title_run.font.bold = True
+    title_run.font.color.rgb = RGBColor(0x1A, 0x1A, 0x2E)
+
+    subtitle = doc.add_paragraph()
+    subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    subtitle.paragraph_format.space_before = Pt(2)
+    subtitle.paragraph_format.space_after = Pt(16)
+    sub_run = subtitle.add_run('For Instructor Use Only | IFQM Bangalore & SRM Q Club')
+    sub_run.font.name = 'Times New Roman'
+    sub_run.font.size = Pt(10)
+    sub_run.font.italic = True
+    sub_run.font.color.rgb = RGBColor(0x88, 0x88, 0x88)
+
+    # Parse and render teaching note content
+    TEACHING_HEADERS = [
+        'LEARNING OUTCOMES',
+        'DISCUSSION QUESTIONS',
+        'TEACHING PLAN',
+        'KEY CONCEPTS',
+        'SUGGESTED FURTHER READING',
+        'SYNOPSIS',
+        'CLASSROOM GUIDANCE'
+    ]
+
+    lines = teaching_content.split('\n')
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        # Clean markdown
+        clean = re.sub(r'^#{1,6}\s*', '', line)
+        clean = re.sub(r'\*\*(.*?)\*\*', r'\1', clean)
+        clean = re.sub(r'\*(.*?)\*', r'\1', clean)
+        clean = re.sub(r'<[^>]+>', '', clean)
+        clean = clean.strip()
+
+        if not clean:
+            continue
+
+        # Check if section header
+        is_header = False
+        for h in TEACHING_HEADERS:
+            if clean.upper() == h or clean.upper().startswith(h + ':'):
+                p = doc.add_paragraph()
+                p.paragraph_format.space_before = Pt(14)
+                p.paragraph_format.space_after = Pt(6)
+                r = p.add_run(h)
+                r.font.name = 'Times New Roman'
+                r.font.size = Pt(12)
+                r.font.bold = True
+                r.font.underline = True
+                r.font.color.rgb = RGBColor(0x8B, 0x00, 0x00)
+                is_header = True
+                break
+
+        if not is_header:
+            if clean.startswith(('•', '*', '-', '1.', '2.', '3.', '4.', '5.', '6.')):
+                bullet_text = re.sub(r'^[\•\*\-\d\.]+\s*', '', clean).strip()
+                p = doc.add_paragraph()
+                p.paragraph_format.space_before = Pt(1)
+                p.paragraph_format.space_after = Pt(3)
+                p.paragraph_format.left_indent = Inches(0.25)
+                r = p.add_run(f'• {bullet_text}')
+                r.font.name = 'Times New Roman'
+                r.font.size = Pt(11)
+            else:
+                p = doc.add_paragraph()
+                p.paragraph_format.space_before = Pt(0)
+                p.paragraph_format.space_after = Pt(6)
+                p.paragraph_format.first_line_indent = Inches(0.3)
+                p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                r = p.add_run(clean)
+                r.font.name = 'Times New Roman'
+                r.font.size = Pt(11)
+                r.font.color.rgb = RGBColor(0x1A, 0x1A, 0x1A)
+
+    # Footer
+    footer_para = doc.add_paragraph()
+    footer_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    footer_para.paragraph_format.space_before = Pt(20)
+    footer_run = footer_para.add_run(
+        f'Teaching Note | CaseIQ | IFQM Bangalore & SRM Q Club | {citation_style.upper()}'
+    )
+    footer_run.font.size = Pt(8)
+    footer_run.font.name = 'Times New Roman'
+    footer_run.font.italic = True
+    footer_run.font.color.rgb = RGBColor(0xAA, 0xAA, 0xAA)
+
     # Save
     os.makedirs(OUTPUTS_DIR, exist_ok=True)
     safe_name = re.sub(r'[^\w\s-]', '', company_name).strip().replace(' ', '_')
-    path = os.path.join(OUTPUTS_DIR, f'{safe_name}_case_study.docx')
+    timestamp = datetime.now().strftime("%H%M%S")
+    path = os.path.join(OUTPUTS_DIR, f'{safe_name}_{timestamp}_teaching_note.docx')
     doc.save(path)
-    print(f"[exporter] Saved: {path}")
+    print(f"[exporter] Teaching note saved: {path}")
     return path
