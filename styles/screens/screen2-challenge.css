@@ -1,0 +1,49 @@
+/* ── Screen 2: The Challenge ────────────────────────────── */
+.word-count { font-size: 13px; margin-top: 8px; color: var(--color-text-muted); transition: color var(--transition-fast); }
+.word-count.good  { color: var(--color-accent); }
+.word-count.over  { color: var(--color-amber); }
+
+.url-paste-row { display: flex; gap: 8px; margin-top: 12px; }
+.url-paste-inp {
+  flex: 1; background: var(--color-terminal-bg);
+  border: 0.5px solid var(--color-border); color: var(--color-text-primary);
+  font-size: 14px; padding: 10px 14px; border-radius: var(--radius-md);
+  outline: none; font-family: var(--font-body);
+  transition: border-color var(--transition-base);
+}
+.url-paste-inp:focus { border-color: var(--color-accent); }
+.url-paste-inp::placeholder { color: var(--color-text-muted); }
+.url-paste-btn {
+  padding: 10px 16px; background: var(--color-accent-dim);
+  border: 0.5px solid rgba(244,167,185,0.4);
+  color: var(--color-accent); font-size: 13px; font-weight: 600;
+  border-radius: var(--radius-md); cursor: pointer; white-space: nowrap;
+  font-family: var(--font-body); transition: all var(--transition-fast);
+}
+.url-paste-btn:hover { background: rgba(244,167,185,0.22); }
+
+.url-tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.url-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--color-accent-dim); color: var(--color-accent);
+  font-size: 12px; padding: 4px 10px; border-radius: var(--radius-full);
+  animation: fadeSlideUp 0.2s ease;
+}
+.url-tag-x { background: none; border: none; color: var(--color-accent); cursor: pointer; font-size: 15px; line-height: 1; padding: 0; transition: color var(--transition-fast); }
+.url-tag-x:hover { color: #ff6b6b; }
+
+/* Protagonist collapsible */
+.prot-toggle {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--color-text-muted); cursor: pointer;
+  padding: 10px 0; transition: color var(--transition-fast); background: none; border: none;
+}
+.prot-toggle:hover { color: var(--color-accent); }
+.prot-plus { font-size: 18px; color: var(--color-accent); }
+.prot-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height var(--transition-slow), padding var(--transition-base);
+}
+.prot-body.open { max-height: 280px; padding-top: 16px; }
+.prot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.prot-note { font-size: 12px; color: var(--color-text-muted); font-style: italic; margin-top: 12px; line-height: 1.55; }
