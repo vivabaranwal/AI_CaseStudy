@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT.CSS — Navbar, Orbs, Wizard, Wrappers, Grid
+═══════════════════════════════════════════════════════════ */
+
+/* ── Background orbs (3 per screen via .orb-layer) ────────── */
+.orb-layer {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.orb {
+  position: absolute; border-radius: 50%; filter: blur(72px); opacity: 0.13;
+}
+.orb-1 {
+  width: 460px; height: 460px; background: var(--color-accent);
+  top: -100px; left: -120px;
+  animation: floatOrb 7s ease-in-out infinite;
+}
+.orb-2 {
+  width: 380px; height: 380px; background: var(--color-amber);
+  bottom: -80px; right: -80px;
+  animation: floatOrb 9s ease-in-out 2s infinite;
+}
+.orb-3 {
+  width: 280px; height: 280px; background: var(--color-accent);
+  top: 45%; left: -60px;
+  animation: floatOrb 11s ease-in-out 4s infinite;
+}
+
+/* ── Navbar ─────────────────────────────────────────────────── */
+.navbar {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 32px;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-heading); font-weight: 800; font-size: 20px;
+  color: var(--color-text-primary);
+}
+.nav-logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-about {
+  font-size: 14px; color: var(--color-text-muted);
+  cursor: pointer; transition: color var(--transition-fast);
+}
+.nav-about:hover { color: var(--color-text-primary); }
+.nav-club-badge {
+  background: var(--color-amber-dim); border: 0.5px solid rgba(245,166,35,0.35);
+  color: var(--color-amber); font-size: 12px; font-weight: 500;
+  padding: 5px 14px; border-radius: var(--radius-full); white-space: nowrap;
+}
+.nav-step-counter {
+  font-size: 13px; color: var(--color-text-muted);
+}
+
+/* ── Wizard progress bar ─────────────────────────────────────── */
+.wizard-bar {
+  position: relative; z-index: 9;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px 32px 12px;
+  border-bottom: 0.5px solid var(--color-border);
+  background: rgba(10,15,30,0.7); backdrop-filter: blur(10px);
+}
+.wizard-bar.hidden { display: none; }
+
+.wz-steps {
+  display: flex; align-items: center; gap: 0; max-width: 560px; width: 100%;
+}
+.wz-step {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  position: relative; cursor: default;
+}
+.wz-dot {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-size: 13px; font-weight: 700;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface); color: var(--color-text-muted);
+  transition: all var(--transition-base);
+  position: relative; z-index: 1;
+}
+.wz-step.done .wz-dot {
+  background: var(--color-accent); border-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+.wz-step.active .wz-dot {
+  border-color: var(--color-accent); color: var(--color-accent);
+  background: var(--color-surface);
+  animation: pulseRing 1.8s ease-in-out infinite;
+}
+.wz-label {
+  font-size: 11px; color: var(--color-text-muted); white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+.wz-step.done .wz-label,
+.wz-step.active .wz-label { color: var(--color-text-primary); }
+
+.wz-line {
+  flex: 1; height: 1.5px; background: var(--color-border);
+  margin-bottom: 18px; min-width: 32px;
+  transition: background var(--transition-base);
+}
+.wz-line.filled { background: var(--color-accent); }
+
+.wz-mobile {
+  display: none; font-size: 14px; color: var(--color-text-muted); text-align: center;
+  padding: 10px 0 6px;
+}
+
+/* ── Section wrappers ─────────────────────────────────────── */
+.page-wrap {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 48px 32px;
+}
+.page-wrap-narrow { max-width: 740px; }
+.page-wrap-wide   { max-width: 1200px; }
+
+/* ── Two-column grid ─────────────────────────────────────── */
+.two-col {
+  display: grid; grid-template-columns: 60% 1fr; gap: 40px; align-items: start;
+}
+.two-col-even {
+  display: grid; grid-template-columns: 55% 45%; gap: 24px; align-items: start;
+}
+
+/* ── Step nav row ────────────────────────────────────────── */
+.step-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 48px; padding-top: 24px;
+  border-top: 0.5px solid var(--color-border);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar           { padding: 16px 20px; }
+  .page-wrap        { padding: 32px 20px; }
+  .two-col          { grid-template-columns: 1fr; }
+  .two-col-even     { grid-template-columns: 1fr; }
+  .wizard-bar       { padding: 10px 20px 8px; }
+  .wz-steps         { display: none; }
+  .wz-mobile        { display: block; }
+  .step-nav         { flex-direction: column; gap: 12px; }
+}
