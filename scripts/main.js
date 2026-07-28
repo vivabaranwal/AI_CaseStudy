@@ -29,11 +29,11 @@ async function boot() {
     startGeneration();
   });
 
-  // Preview — load mock data and render
-  document.addEventListener('caseiq:show-preview', () => initScreen7());
+  // Preview/success screen — init when generation completes
+  document.addEventListener('caseiq:show-export', () => initScreen7());
 
-  // Export
-  document.addEventListener('caseiq:show-export', () => initScreen8());
+  // Export screen — init when user navigates from Screen 7
+  document.addEventListener('caseiq:show-export-screen', () => initScreen8());
 
   // Start at screen 0
   initRouter();

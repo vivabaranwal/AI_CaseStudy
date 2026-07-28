@@ -85,6 +85,7 @@ export function initScreen3() {
 
   lucide.createIcons();
   _bind3();
+  _restore3();
   _updateCount3();
 }
 
@@ -213,6 +214,87 @@ function _addTranscript3(file) {
   });
   list.appendChild(card);
   lucide.createIcons(); _updateCount3();
+}
+
+function _restore3() {
+  const list = document.getElementById('s3-url-list');
+  if (list) {
+    list.innerHTML = '';
+    formState.step3.manualURLs.forEach(url => {
+      renderSourceCard(url, 's3-url-list', removed => {
+        formState.step3.manualURLs = formState.step3.manualURLs.filter(u => u !== removed);
+        _updateCount3(); _checkLimit();
+      });
+    });
+  }
+
+  const pdfList = document.getElementById('s3-pdf-list');
+  if (pdfList) {
+    pdfList.innerHTML = '';
+    formState.step3.manualPDFs.forEach(file => {
+      const card = document.createElement('div');
+      card.className = 'pdf-card';
+      card.innerHTML = `
+        <div class="pdf-icon"><i data-lucide="file-text"></i></div>
+        <div><div class="pdf-name">${file.name}</div><div class="pdf-size">${(file.size/1024).toFixed(0)} KB</div></div>
+        <select class="pdf-type-sel">
+          <option>Annual Report</option><option>Press Release</option>
+          <option>Research Paper</option><option>Other</option>
+        </select>
+        <button class="source-remove">×</button>`;
+      card.querySelector('.source-remove').addEventListener('click', () => {
+        formState.step3.manualPDFs = formState.step3.manualPDFs.filter(f => f.name !== file.name);
+        card.remove(); _updateCount3();
+      });
+      pdfList.appendChild(card);
+    });
+  }
+
+  const avList = document.getElementById('s3-av-list');
+  if (avList) {
+    avList.innerHTML = '';
+    formState.step3.audioVideoFiles.forEach(file => {
+      const type = _getAvType(file.name);
+      const iconName = type === 'Video' ? 'video' : 'mic';
+      const card = document.createElement('div');
+      card.className = 'pdf-card';
+      card.innerHTML = `
+        <div class="pdf-icon"><i data-lucide="${iconName}"></i></div>
+        <div><div class="pdf-name">${file.name}</div><div class="pdf-size">${(file.size/1024).toFixed(0)} KB</div></div>
+        <span class="source-badge-type type-report">${type}</span>
+        <button class="source-remove">×</button>`;
+      card.querySelector('.source-remove').addEventListener('click', () => {
+        formState.step3.audioVideoFiles = formState.step3.audioVideoFiles.filter(f => f.name !== file.name);
+        card.remove(); _updateCount3();
+      });
+      avList.appendChild(card);
+    });
+  }
+
+  const trList = document.getElementById('s3-tr-list');
+  if (trList) {
+    trList.innerHTML = '';
+    formState.step3.transcriptFiles.forEach(file => {
+      const card = document.createElement('div');
+      card.className = 'pdf-card';
+      card.innerHTML = `
+        <div class="pdf-icon"><i data-lucide="file-text"></i></div>
+        <div><div class="pdf-name">${file.name}</div><div class="pdf-size">${(file.size/1024).toFixed(0)} KB</div></div>
+        <select class="pdf-type-sel">
+          <option>Interview Transcript</option><option>Earnings Call</option>
+          <option>Press Briefing</option><option>Other</option>
+        </select>
+        <button class="source-remove">×</button>`;
+      card.querySelector('.source-remove').addEventListener('click', () => {
+        formState.step3.transcriptFiles = formState.step3.transcriptFiles.filter(f => f.name !== file.name);
+        card.remove(); _updateCount3();
+      });
+      trList.appendChild(card);
+    });
+  }
+
+  _checkLimit();
+  lucide.createIcons();
 }
 
 function _updateCount3() {
