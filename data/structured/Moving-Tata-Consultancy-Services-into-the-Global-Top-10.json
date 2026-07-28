@@ -1,0 +1,64 @@
+{
+  "case_study_id": "Moving-Tata-Consultancy-Services-into-the-Global-Top-10",
+  "source_filename": "Moving-Tata-Consultancy-Services-into-the-Global-Top-10.pdf",
+  "title": "Dossanitn.fm",
+  "protagonist": {
+    "name": "[Insert Protagonist Name]",
+    "role": "[Insert Protagonist Role/Title - e.g., CEO, Manager]",
+    "organization": "Tata",
+    "key_decisions": [
+      "[Insert Key Decision 1 that protagonist needs to make]"
+    ]
+  },
+  "context": {
+    "industry": "[Insert Industry - e.g., Information Technology, Manufacturing]",
+    "geography": "[Insert Geographic Location]",
+    "time_period": "Around 2003",
+    "company_background": "[Insert brief company background context]"
+  },
+  "narrative_arc": {
+    "opening_crisis": "[Insert the Opening Crisis / Hook]",
+    "core_challenge": "[Suggested from Page 1]: \"Journal of Strategic Management Education 1(2).\"",
+    "key_events_timeline": [
+      {
+        "date_or_period": "[Insert Date/Period]",
+        "event_description": "[Insert Event Description]"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "[Insert Stakeholder Name]",
+      "role": "[Insert Stakeholder Role]",
+      "perspective_or_concern": "[Insert Stakeholder's main concern or viewpoint]"
+    }
+  ],
+  "exhibits_and_data": [
+    {
+      "exhibit_identifier": "Table\n1",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 1",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 2",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 4",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    }
+  ],
+  "discussion_questions": [
+    "[Insert discussion question 1 used for classroom analysis]"
+  ],
+  "academic_themes": [
+    "Marketing Strategy & Brand Positioning"
+  ]
+}

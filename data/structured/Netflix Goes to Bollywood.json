@@ -1,0 +1,50 @@
+{
+  "case_study_id": "Netflix Goes to Bollywood",
+  "source_filename": "Netflix Goes to Bollywood.pdf",
+  "title": "Netflix in 2020 / Netflix goes to Bollywood",
+  "protagonist": {
+    "name": "[Insert Protagonist Name]",
+    "role": "[Insert Protagonist Role/Title - e.g., CEO, Manager]",
+    "organization": "The Walt Disney Company",
+    "key_decisions": [
+      "[Insert Key Decision 1 that protagonist needs to make]"
+    ]
+  },
+  "context": {
+    "industry": "[Insert Industry - e.g., Information Technology, Manufacturing]",
+    "geography": "[Insert Geographic Location]",
+    "time_period": "Around 2019",
+    "company_background": "[Insert brief company background context]"
+  },
+  "narrative_arc": {
+    "opening_crisis": "[Insert the Opening Crisis / Hook]",
+    "core_challenge": "[Suggested from Page 1]: \"Consumers faced limited choices, had to arrange their schedule to watch a show when it was broadcast, wait a week for the next episode, and sit through frequent commercials breaks.\"",
+    "key_events_timeline": [
+      {
+        "date_or_period": "[Insert Date/Period]",
+        "event_description": "[Insert Event Description]"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "[Insert Stakeholder Name]",
+      "role": "[Insert Stakeholder Role]",
+      "perspective_or_concern": "[Insert Stakeholder's main concern or viewpoint]"
+    }
+  ],
+  "exhibits_and_data": [
+    {
+      "exhibit_identifier": "[e.g., Exhibit 1]",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    }
+  ],
+  "discussion_questions": [
+    "[Insert discussion question 1 used for classroom analysis]"
+  ],
+  "academic_themes": [
+    "Strategic Leadership & Management",
+    "Marketing Strategy & Brand Positioning"
+  ]
+}

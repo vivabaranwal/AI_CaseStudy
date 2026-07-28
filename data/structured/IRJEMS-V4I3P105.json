@@ -1,0 +1,56 @@
+{
+  "case_study_id": "IRJEMS-V4I3P105",
+  "source_filename": "IRJEMS-V4I3P105.pdf",
+  "title": "A Case Study on the SWOC Analysis of Zomato in the Current Landscape",
+  "protagonist": {
+    "name": "[Insert Protagonist Name]",
+    "role": "[Insert Protagonist Role/Title - e.g., CEO, Manager]",
+    "organization": "Zomato",
+    "key_decisions": [
+      "[Insert Key Decision 1 that protagonist needs to make]"
+    ]
+  },
+  "context": {
+    "industry": "[Insert Industry - e.g., Information Technology, Manufacturing]",
+    "geography": "[Insert Geographic Location]",
+    "time_period": "Around 2021",
+    "company_background": "[Insert brief company background context]"
+  },
+  "narrative_arc": {
+    "opening_crisis": "[Insert the Opening Crisis / Hook]",
+    "core_challenge": "[Suggested from Page 1]: \"IRJEMS International Research Journal of Economics and Management Studies Published by Eternal Scientific Publications ISSN: 2583 – 5238 / Volume 4 Issue 3 March 2025 / Pg.\"",
+    "key_events_timeline": [
+      {
+        "date_or_period": "[Insert Date/Period]",
+        "event_description": "[Insert Event Description]"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "[Insert Stakeholder Name]",
+      "role": "[Insert Stakeholder Role]",
+      "perspective_or_concern": "[Insert Stakeholder's main concern or viewpoint]"
+    }
+  ],
+  "exhibits_and_data": [
+    {
+      "exhibit_identifier": "Table 1",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 02",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    }
+  ],
+  "discussion_questions": [
+    "[Insert discussion question 1 used for classroom analysis]"
+  ],
+  "academic_themes": [
+    "Customer Service Excellence",
+    "Employee Retention & HR Strategy",
+    "Marketing Strategy & Brand Positioning"
+  ]
+}

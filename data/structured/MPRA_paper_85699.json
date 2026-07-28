@@ -1,0 +1,65 @@
+{
+  "case_study_id": "MPRA_paper_85699",
+  "source_filename": "MPRA_paper_85699.pdf",
+  "title": "Microsoft Word - 1. HUL Case Study- Keerthan-1 Final",
+  "protagonist": {
+    "name": "[Insert Protagonist Name]",
+    "role": "[Insert Protagonist Role/Title - e.g., CEO, Manager]",
+    "organization": "Hindustan Unilever Limited",
+    "key_decisions": [
+      "[Insert Key Decision 1 that protagonist needs to make]"
+    ]
+  },
+  "context": {
+    "industry": "[Insert Industry - e.g., Information Technology, Manufacturing]",
+    "geography": "[Insert Geographic Location]",
+    "time_period": "Around 2018",
+    "company_background": "[Insert brief company background context]"
+  },
+  "narrative_arc": {
+    "opening_crisis": "[Suggested from Page 2]: \"The critical aspect here is developing grassroots’ connection and social empathy which should translate to a cooperative spirit which will leverage the strengths and overcome the weaknesses.\"",
+    "core_challenge": "[Suggested from Page 2]: \"Case studies mainly focus on to study and analyse an organization and its business to see new information to provide solutions to a given or identified problem.\"",
+    "key_events_timeline": [
+      {
+        "date_or_period": "[Insert Date/Period]",
+        "event_description": "[Insert Event Description]"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "[Insert Stakeholder Name]",
+      "role": "[Insert Stakeholder Role]",
+      "perspective_or_concern": "[Insert Stakeholder's main concern or viewpoint]"
+    }
+  ],
+  "exhibits_and_data": [
+    {
+      "exhibit_identifier": "Table 1",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 2",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 3",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    },
+    {
+      "exhibit_identifier": "Table 4",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    }
+  ],
+  "discussion_questions": [
+    "[Insert discussion question 1 used for classroom analysis]"
+  ],
+  "academic_themes": [
+    "Strategic Leadership & Management",
+    "Marketing Strategy & Brand Positioning"
+  ]
+}
