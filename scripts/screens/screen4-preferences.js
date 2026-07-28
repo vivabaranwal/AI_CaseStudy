@@ -9,8 +9,15 @@ const PREFS = [
     opts: [{v:'academic',l:'Academic'},{v:'semi-academic',l:'Semi-Academic'},{v:'consulting',l:'Consulting'},{v:'business-style',l:'Business Style'},{v:'none',l:'None'}] },
   { key: 'includeTeachingNote', label: 'Include Teaching Note?', type: 'toggle',
     desc: 'Separate doc for professors with discussion questions and classroom guidance.' },
-  { key: 'citationStyle', label: 'Citation Style', type: 'select', desc: 'Format used for in-text citations and bibliography.',
-    opts: ['APA','MLA','Chicago','Harvard'] },
+  { key: 'citationStyle', label: 'Citation Style', type: 'select', desc: 'Official citation format for references and bibliography.',
+    opts: [
+      { label: 'General (No Citation)', value: 'general' },
+      { label: 'APA 7th Edition', value: 'apa7' },
+      { label: 'APA 6th Edition', value: 'apa6' },
+      { label: 'Harvard Referencing', value: 'harvard' },
+      { label: 'Chicago 17th (Footnotes)', value: 'chicago' },
+      { label: 'MLA 9th Edition', value: 'mla' }
+    ] },
   { key: 'sectionApproval', label: 'Section-by-Section Approval', type: 'toggle',
     desc: 'Approve each section before AI moves to the next. Turn off for fully automatic generation.' },
   { key: 'hookStyle', label: 'Opening Hook Style', type: 'pills', desc: 'Cinematic: in-the-room moment. Statistical: striking number. Question: provocation.',
@@ -83,13 +90,17 @@ function _buildGrid() {
     } else if (p.type === 'select') {
       const sel = document.createElement('select');
       sel.className = 'form-select'; sel.style.marginTop = '4px';
-      p.opts.forEach(o => {
-        const val = typeof o === 'string' ? o : o.v;
-        const lbl = typeof o === 'string' ? o : o.l;
-        const opt = document.createElement('option');
-        opt.value = val; opt.textContent = lbl;
-        if (formState.step4[p.key] === val) opt.selected = true;
-        sel.appendChild(opt);
+      p.opts.forEach(opt => {
+        const option = document.createElement('option');
+        if (typeof opt === 'object') {
+          option.value = opt.value !== undefined ? opt.value : opt.v;
+          option.textContent = opt.label !== undefined ? opt.label : opt.l;
+        } else {
+          option.value = opt;
+          option.textContent = opt;
+        }
+        if (formState.step4[p.key] === option.value) option.selected = true;
+        sel.appendChild(option);
       });
       sel.addEventListener('change', () => { formState.step4[p.key] = sel.value; });
       ctrl.appendChild(sel);
