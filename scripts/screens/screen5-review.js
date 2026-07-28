@@ -2,16 +2,27 @@
 import { formState } from '../formState.js';
 import { showScreen } from '../router.js';
 import { startGeneration, stopGeneration } from './screen6-generation.js';
+import { API_BASE_URL } from '../config.js';
 
 
 const LEN = { short:'Short (8 pages)', standard:'Standard (15 pages)', long:'Long (20+ pages)' };
 const HOOK = { cinematic:'Cinematic', statistical:'Statistical', question:'Question' };
+const citationLabels = {
+    'general': 'General (No Citation)',
+    'apa7': 'APA 7th Edition',
+    'apa6': 'APA 6th Edition',
+    'harvard': 'Harvard Referencing',
+    'chicago': 'Chicago 17th',
+    'mla': 'MLA 9th Edition'
+};
 
 export function initScreen5() {
   const s1 = formState.step1;
   const s2 = formState.step2;
   const s3 = formState.step3;
   const s4 = formState.step4;
+
+  const citationDisplay = citationLabels[s4.citationStyle] || s4.citationStyle || 'General';
 
   const challengeShort = (s2.challengeText || '').slice(0, 200);
   const hasMore = (s2.challengeText || '').length > 200;
@@ -70,7 +81,7 @@ export function initScreen5() {
           ${_kv('Length',       LEN[s4.caseLength] || s4.caseLength)}
           ${_kv('Tone',         s4.tone)}
           ${_kv('Teaching Note',s4.includeTeachingNote ? 'Yes' : 'No')}
-          ${_kv('Citations',    s4.citationStyle)}
+          ${_kv('Citations',    citationDisplay)}
           ${_kv('Sec. Approval',s4.sectionApproval     ? 'On'  : 'Off')}
           ${_kv('Hook Style',   HOOK[s4.hookStyle] || s4.hookStyle)}
           ${_kv('Language',     s4.language)}
@@ -131,7 +142,7 @@ export function initScreen5() {
     }
 
     try {
-        const response = await fetch('http://localhost:8000/generate-case/', {
+        const response = await fetch(`${API_BASE_URL}/generate-case/`, {
             method: 'POST',
             body: payload
         });
@@ -140,16 +151,32 @@ export function initScreen5() {
             throw new Error(`Backend error: ${response.status}`);
         }
 
-        const blob = await response.blob();
-        const downloadUrl = URL.createObjectURL(blob);
+        const data = await response.json();
 
-        // Store in formState for Screen 8
-        formState.generatedFileUrl = downloadUrl;
-        formState.generatedFileName = `${formState.step1.companyName}_case_study.docx`;
+        // Store case text in memory (clears on reload)
+        formState.generatedCaseText = data.case_text;
+        formState.generatedFileName = data.filename;
 
-        // Auto-trigger download immediately
+        // Convert base64 to blob for Word download
+        const docxBytes = Uint8Array.from(atob(data.docx_base64), c => c.charCodeAt(0));
+        const docxBlob = new Blob([docxBytes], {
+            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        });
+        formState.generatedFileUrl = URL.createObjectURL(docxBlob);
+
+        // Handle teaching note if present
+        if (data.teaching_note_base64) {
+            const tnBytes = Uint8Array.from(atob(data.teaching_note_base64), c => c.charCodeAt(0));
+            const tnBlob = new Blob([tnBytes], {
+                type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            });
+            formState.generatedTeachingNoteUrl = URL.createObjectURL(tnBlob);
+            formState.generatedTeachingNoteFileName = data.teaching_note_filename;
+        }
+
+        // Auto download Word file
         const a = document.createElement('a');
-        a.href = downloadUrl;
+        a.href = formState.generatedFileUrl;
         a.download = formState.generatedFileName;
         document.body.appendChild(a);
         a.click();
@@ -158,18 +185,18 @@ export function initScreen5() {
         // Stop generation visual loops
         stopGeneration();
 
-        // Dispatch show-export event to initialize screen 8 content
+        // Dispatch show-export event to initialize screen 7 content
         document.dispatchEvent(new CustomEvent('caseiq:show-export'));
 
-        // Navigate to Screen 8
-        showScreen(8);
+        // Navigate to Screen 7 (preview/success)
+        showScreen(7);
 
     } catch (error) {
         console.error('Generation failed:', error);
         stopGeneration();
         showScreen(5);
         if (errDiv) {
-            errDiv.textContent = 'Generation failed. Make sure backend is running at localhost:8000';
+            errDiv.textContent = 'Generation failed. Make sure backend is running at 127.0.0.1:8000';
         }
         btn.disabled = false;
     }
