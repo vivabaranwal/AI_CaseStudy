@@ -1,0 +1,8 @@
+[
+  { "id": "src-1", "type": "primary", "title": "Zomato Annual Report FY24", "url": "https://ir.zomato.com/annual-reports", "year": "2024", "citedIn": ["Company Background", "Results & Outcomes"] },
+  { "id": "src-2", "type": "primary", "title": "Zomato Q4 FY24 Investor Presentation", "url": "https://ir.zomato.com/investor-presentations", "year": "2024", "citedIn": ["Opening Hook", "Intervention"] },
+  { "id": "src-3", "type": "primary", "title": "Deepinder Goyal — Founders Unfiltered Interview (YourStory)", "url": "https://yourstory.com/2024/01/deepinder-goyal-zomato-blinkit-strategy", "year": "2024", "citedIn": ["The Challenge", "Intervention"] },
+  { "id": "src-4", "type": "secondary", "title": "Quick Commerce in India: The $5 Billion Race — Economic Times", "url": "https://economictimes.indiatimes.com/industry/services/retail/quick-commerce-india", "year": "2023", "citedIn": ["Industry & Competitive Context"] },
+  { "id": "src-5", "type": "secondary", "title": "IBEF Report: India Logistics & Supply Chain 2023", "url": "https://www.ibef.org/industry/logistics-india", "year": "2023", "citedIn": ["Industry & Competitive Context", "The Challenge"] },
+  { "id": "src-6", "type": "secondary", "title": "Last-Mile Delivery Economics in Emerging Markets — Journal of Supply Chain Management, Vol. 59", "url": "https://onlinelibrary.wiley.com/journal/1745493x", "year": "2023", "citedIn": ["Learning Outcomes"] }
+]
