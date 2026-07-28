@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CaseIQ — AI Case Study Generator | SRM Q Club</title>
+  <meta name="description" content="CaseIQ converts company research into publisher-grade IFQM-structured business case studies using AI. Built by SRM Q Club." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/animations.css" />
+
+  <!-- Screen Styles -->
+  <link rel="stylesheet" href="styles/screens/screen0-landing.css" />
+  <link rel="stylesheet" href="styles/screens/screen1-company.css" />
+  <link rel="stylesheet" href="styles/screens/screen2-challenge.css" />
+  <link rel="stylesheet" href="styles/screens/screen3-sources.css" />
+  <link rel="stylesheet" href="styles/screens/screen4-preferences.css" />
+  <link rel="stylesheet" href="styles/screens/screen5-review.css" />
+  <link rel="stylesheet" href="styles/screens/screen6-generation.css" />
+  <link rel="stylesheet" href="styles/screens/screen7-preview.css" />
+  <link rel="stylesheet" href="styles/screens/screen8-export.css" />
+</head>
+<body>
+
+<!-- ═══ Background Orbs ═══════════════════════════════════ -->
+<div class="orb-layer">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- ═══ Confetti Canvas ═══════════════════════════════════ -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ═══ Navbar ═════════════════════════════════════════════ -->
+<nav class="navbar">
+  <div class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    CaseIQ
+  </div>
+  <div class="nav-right">
+    <span class="nav-about" id="nav-about-link">About</span>
+    <span class="nav-step-counter" id="nav-step-counter" style="display:none"></span>
+    <span class="nav-club-badge">SRM Q Club</span>
+  </div>
+</nav>
+
+<!-- ═══ Wizard Progress Bar (Screens 1–5) ═════════════════ -->
+<div class="wizard-bar hidden" id="wizard-bar">
+  <div class="wz-steps">
+    <div class="wz-step" data-step="1">
+      <div class="wz-dot">1</div>
+      <div class="wz-label">Company</div>
+    </div>
+    <div class="wz-line" data-after="1"></div>
+    <div class="wz-step" data-step="2">
+      <div class="wz-dot">2</div>
+      <div class="wz-label">Challenge</div>
+    </div>
+    <div class="wz-line" data-after="2"></div>
+    <div class="wz-step" data-step="3">
+      <div class="wz-dot">3</div>
+      <div class="wz-label">Sources</div>
+    </div>
+    <div class="wz-line" data-after="3"></div>
+    <div class="wz-step" data-step="4">
+      <div class="wz-dot">4</div>
+      <div class="wz-label">Preferences</div>
+    </div>
+    <div class="wz-line" data-after="4"></div>
+    <div class="wz-step" data-step="5">
+      <div class="wz-dot">5</div>
+      <div class="wz-label">Review</div>
+    </div>
+  </div>
+  <div class="wz-mobile" id="wz-mobile-label">Step 1 of 5</div>
+</div>
+
+<!-- ═══ Screen Containers ═════════════════════════════════ -->
+<div class="screen" id="screen-0"></div>
+<div class="screen" id="screen-1"></div>
+<div class="screen" id="screen-2"></div>
+<div class="screen" id="screen-3"></div>
+<div class="screen" id="screen-4"></div>
+<div class="screen" id="screen-5"></div>
+<div class="screen" id="screen-6"></div>
+<div class="screen" id="screen-7"></div>
+<div class="screen" id="screen-8"></div>
+
+<!-- ═══ Entry Point ═══════════════════════════════════════ -->
+<script type="module" src="scripts/main.js"></script>
+
+</body>
+</html>
