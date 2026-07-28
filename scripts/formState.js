@@ -11,7 +11,7 @@ export const formState = {
   step4: {
     caseLength: 'standard', tone: 'academic',
     includeTeachingNote: false,
-    citationStyle: 'APA', sectionApproval: true,
+    citationStyle: 'general', sectionApproval: true,
     hookStyle: 'cinematic', language: 'english-academic'
   },
   generatedSections: {},
