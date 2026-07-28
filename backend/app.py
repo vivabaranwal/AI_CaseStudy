@@ -19,13 +19,13 @@
 # app.py — Orchestration only. No business logic here.
 
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import json, io, pdfplumber, os, re
+import json, io, pdfplumber, os, re, glob, base64
 
 from retriever import retrieve
 from generator import generate
-from exporter import export
+from exporter import export, export_teaching_note
 from scraper import scrape_multiple
 
 app = FastAPI(title="CaseIQ API")
@@ -106,40 +106,62 @@ async def generate_case(
     citation_style = prefs.get('citationStyle', 'apa7')
     path = export(company_name, case_text, citation_style)
 
-    return FileResponse(
-        path,
-        filename=f"{company_name}_case_study.docx",
-        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    )
+    teaching_note_path = None
+    if prefs.get('includeTeachingNote'):
+        tn_content = f"LEARNING OUTCOMES\n• Understand strategic transformation at {company_name}.\n• Analyze key decision points and business challenges.\n\nDISCUSSION QUESTIONS\n1. What were the primary drivers for {company_name}'s strategy?\n2. How should leadership address operational risks?\n\nTEACHING PLAN\n• Introduction (15 mins)\n• Case Analysis (45 mins)\n• Conclusion (15 mins)\n\nKEY CONCEPTS\n• Strategic Resilience\n• Market Positioning\n\nSYNOPSIS\nThis case study examines {company_name}'s operational and strategic challenges."
+        teaching_note_path = export_teaching_note(company_name, tn_content, citation_style)
+
+    with open(path, 'rb') as f:
+        docx_bytes = base64.b64encode(f.read()).decode('utf-8')
+
+    response_data = {
+        "case_text": case_text,
+        "docx_base64": docx_bytes,
+        "filename": os.path.basename(path),
+        "teaching_note_base64": None,
+        "teaching_note_filename": None
+    }
+
+    if teaching_note_path and os.path.exists(teaching_note_path):
+        with open(teaching_note_path, 'rb') as f:
+            tn_bytes = base64.b64encode(f.read()).decode('utf-8')
+        response_data["teaching_note_base64"] = tn_bytes
+        response_data["teaching_note_filename"] = os.path.basename(teaching_note_path)
+
+    return JSONResponse(content=response_data)
 
 
 @app.post("/export-pdf/")
 async def export_pdf(data: dict):
-    """Convert the last generated Word doc to PDF and return it."""
-    import subprocess
+    """Convert the most recently generated Word doc to PDF and return it."""
     company_name = data.get('company_name', 'case_study')
     safe_name = re.sub(r'[^\w\s-]', '', company_name).strip().replace(' ', '_')
-    
-    docx_path = os.path.join('../outputs/', f'{safe_name}_case_study.docx')
-    pdf_path = os.path.join('../outputs/', f'{safe_name}_case_study.pdf')
-    
-    if not os.path.exists(docx_path):
-        raise HTTPException(status_code=404, detail="Word document not found. Generate case first.")
-    
-    # Convert using LibreOffice (cross-platform)
+
+    # Absolute path to outputs/ regardless of working directory
+    outputs_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'outputs'))
+
+    # Find all matching .docx files (handles timestamp suffixes like Company_143022_case_study.docx)
+    matching = glob.glob(os.path.join(outputs_dir, f'{safe_name}*.docx'))
+
+    if not matching:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No Word document found for '{company_name}'. Generate a case study first."
+        )
+
+    # Use most recently created file
+    docx_path = max(matching, key=os.path.getctime)
+    pdf_path = docx_path.replace('.docx', '.pdf')
+
     try:
-        subprocess.run([
-            'soffice', '--headless', '--convert-to', 'pdf',
-            '--outdir', '../outputs/', docx_path
-        ], check=True, timeout=30)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        # Fallback: use python-docx2pdf if LibreOffice not available
-        try:
-            from docx2pdf import convert
-            convert(docx_path, pdf_path)
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"PDF conversion failed: {str(e)}")
-    
+        from docx2pdf import convert
+        convert(docx_path, pdf_path)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"PDF conversion failed: {str(e)}. Make sure Microsoft Word is installed."
+        )
+
     return FileResponse(
         pdf_path,
         filename=f'{safe_name}_case_study.pdf',
