@@ -88,7 +88,7 @@ async function _triggerBackendCall() {
     termBody.scrollTop = termBody.scrollHeight;
   };
 
-  printLog("<span class='term-cyan'>[API] Sending generation request to http://localhost:8000/generate-case/...</span>");
+  printLog("<span class='term-cyan'>[API] Sending generation request to http://127.0.0.1:8000/generate-case/...</span>");
 
   try {
     const payload = new FormData();
@@ -104,7 +104,7 @@ async function _triggerBackendCall() {
       printLog(`[API] Attached source PDF: ${formState.step3.manualPDFs[0].name}`);
     }
 
-    const response = await fetch('http://localhost:8000/generate-case/', {
+    const response = await fetch('http://127.0.0.1:8000/generate-case/', {
       method: 'POST',
       body: payload
     });
@@ -127,7 +127,7 @@ async function _triggerBackendCall() {
     formState.generatedFileName = null;
     const statusEl = document.getElementById('generation-status');
     if (statusEl) {
-      statusEl.innerText = 'Generation failed. Make sure the backend server is running at localhost:8000.';
+      statusEl.innerText = 'Generation failed. Make sure the backend server is running at 127.0.0.1:8000.';
     }
     printLog(`<span class='term-red'>[API ERROR] ${error.message}. Check that uvicorn is running.</span>`);
     console.error('Backend fetch error:', error);
