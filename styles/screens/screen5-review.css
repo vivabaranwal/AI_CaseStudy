@@ -1,0 +1,24 @@
+/* ── Screen 5: Review & Confirm ─────────────────────────── */
+.review-card {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 20px 24px; margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+.review-card-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.review-card-title { font-family: var(--font-heading); font-size: 16px; font-weight: 700; color: var(--color-accent); }
+
+.review-kv-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(140px,1fr)); gap: 12px 20px; }
+.rv-key { font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.rv-val { font-size: 14px; font-weight: 500; }
+
+.rev-challenge-text { font-size: 14px; color: var(--color-text-muted); line-height: 1.7; margin-bottom: 12px; }
+.rev-tag { display: inline-flex; align-items: center; gap: 5px; background: var(--color-accent-dim); color: var(--color-accent); font-size: 12px; padding: 3px 10px; border-radius: var(--radius-full); margin: 3px; }
+
+.begin-cta { margin-top: 32px; }
+.begin-sub { text-align: center; font-size: 13px; color: var(--color-text-muted); margin-top: 12px; }
+
+.show-more-btn { background: none; border: none; color: var(--color-accent); font-size: 12px; cursor: pointer; margin-left: 4px; }
+.show-more-btn:hover { text-decoration: underline; }
