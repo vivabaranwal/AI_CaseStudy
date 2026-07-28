@@ -1,0 +1,49 @@
+{
+  "case_study_id": "fin_ijprems1746703822",
+  "source_filename": "fin_ijprems1746703822.pdf",
+  "title": "RESEARCH IN ENGINEERING MANAGEMENT 2583-1062",
+  "protagonist": {
+    "name": "[Insert Protagonist Name]",
+    "role": "[Insert Protagonist Role/Title - e.g., CEO, Manager]",
+    "organization": "Infosys Limited",
+    "key_decisions": [
+      "[Insert Key Decision 1 that protagonist needs to make]"
+    ]
+  },
+  "context": {
+    "industry": "[Insert Industry - e.g., Information Technology, Manufacturing]",
+    "geography": "[Insert Geographic Location]",
+    "time_period": "Around 2024",
+    "company_background": "[Insert brief company background context]"
+  },
+  "narrative_arc": {
+    "opening_crisis": "[Suggested from Page 1]: \"STATEMENT OF THE PROBLEM Businesses often struggle to balance growth aspirations with financial discipline.\"",
+    "core_challenge": "[Suggested from Page 1]: \"05, Issue 05, May 2025, pp : 245-249 7.\"",
+    "key_events_timeline": [
+      {
+        "date_or_period": "[Insert Date/Period]",
+        "event_description": "[Insert Event Description]"
+      }
+    ]
+  },
+  "stakeholders": [
+    {
+      "name": "[Insert Stakeholder Name]",
+      "role": "[Insert Stakeholder Role]",
+      "perspective_or_concern": "[Insert Stakeholder's main concern or viewpoint]"
+    }
+  ],
+  "exhibits_and_data": [
+    {
+      "exhibit_identifier": "[e.g., Exhibit 1]",
+      "exhibit_title": "[Insert title of exhibit]",
+      "key_insights": "[Insert key insights derived from this exhibit]"
+    }
+  ],
+  "discussion_questions": [
+    "[Insert discussion question 1 used for classroom analysis]"
+  ],
+  "academic_themes": [
+    "Digital Transformation & Business Re-engineering"
+  ]
+}
