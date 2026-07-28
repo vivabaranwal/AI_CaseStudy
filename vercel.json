@@ -1,14 +1,32 @@
 {
   "version": 2,
   "name": "caseiq",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
+      "src": "backend/app.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/generate-case/?",
+      "dest": "backend/app.py"
+    },
+    {
+      "src": "/export-pdf/?",
+      "dest": "backend/app.py"
+    },
+    {
+      "src": "/health",
+      "dest": "backend/app.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
