@@ -1,11 +1,21 @@
 # citation_formats.py — All citation format templates
 
 CITATION_FORMATS = {
+    "general": """No formal citation style. Do not include in-text citations or reference numbers.
+Write in clean narrative prose without any citation markers.
+At the end, include a simple 'Sources' section listing the main references used, formatted as plain text bullet points.""",
+
     "apa7": """Use APA 7th Edition for all citations.
 In-text format: (Author, Year)
 Reference list format: Author, A. A. (Year). Title of work. Publisher. DOI/URL
 Example in-text: (Goyal & Sharma, 2023)
 Example reference: Goyal, D., & Sharma, R. (2023). Digital transformation in Indian retail. Journal of Business Strategy, 14(2), 45–62.""",
+
+    "apa6": """Use APA 6th Edition format for all citations.
+In-text format: (Author, Year)
+Reference list format: Author, A. A. (Year). Title of work. Publisher.
+Example in-text: (Tata Motors, 2023)
+Example reference: Tata Motors. (2023). Annual report 2023. Tata Motors Limited. Retrieved from https://www.tatamotors.com""",
 
     "harv": """Use Harvard referencing format throughout.
 In-text format: (Author Year, p.XX)
@@ -40,6 +50,49 @@ Example Works Cited: Tata, Ratan. Leadership at Scale. Penguin India, 2022.""",
     "none": "Do not include any citations or references in the output."
 }
 
+SECTION_STRUCTURES = {
+    "general": [
+        "BACKGROUND",
+        "CHALLENGE",
+        "ROOT CAUSE ANALYSIS",
+        "INTERVENTION / APPROACH",
+        "IMPLEMENTATION",
+        "RESULTS AND IMPACT",
+        "RECOMMENDATIONS",
+        "FUTURE SCOPE"
+    ],
+    "apa7": [
+        "BACKGROUND",
+        "THEMES",
+        "INTERVENTION",
+        "RESULTS",
+    ],
+    "apa6": [
+        "BACKGROUND",
+        "THEMES",
+        "INTERVENTION",
+        "RESULTS",
+    ],
+    "harvard": [
+        "BACKGROUND",
+        "THEMES",
+        "INTERVENTION",
+        "RESULTS",
+    ],
+    "chicago": [
+        "BACKGROUND",
+        "THEMES",
+        "INTERVENTION",
+        "RESULTS",
+    ],
+    "mla": [
+        "BACKGROUND",
+        "THEMES",
+        "INTERVENTION",
+        "RESULTS",
+    ]
+}
+
 LENGTH_TARGETS = {
     "short": {
         "total_words": 1500,
@@ -72,8 +125,8 @@ LENGTH_TARGETS = {
 
 CASE_FORMAT_PROMPTS = {
     "ifqm": """Follow IFQM Standard case format.
-Sections in order: BACKGROUND, THEMES, INTERVENTION, RESULTS, LEARNING OUTCOMES.
-Open with a brief situational overview. End with 3–5 bullet-point learning outcomes.""",
+Sections in order: BACKGROUND, THEMES, INTERVENTION, RESULTS.
+Open with a brief situational overview.""",
 
     "hbs": """Follow Harvard Business School case format.
 Open with a named protagonist facing a specific decision at a precise moment in time.
@@ -84,7 +137,7 @@ End with an open question the protagonist must now answer — do not resolve it.
 
     "ivey": """Follow Ivey Business School case format.
 Ground the case in emerging market or cross-cultural business context.
-Sections: BACKGROUND, COMPETITIVE LANDSCAPE, THE DECISION, ANALYSIS, RESULTS, LEARNING OUTCOMES.
+Sections: BACKGROUND, COMPETITIVE LANDSCAPE, THE DECISION, ANALYSIS, RESULTS.
 Include a clear decision point that students must evaluate.
 Use Harvard citation style.""",
 
@@ -95,7 +148,7 @@ Include 4–6 discussion questions at the end for classroom use.
 Use APA 7th citation style.""",
 
     "custom": """Follow standard academic case writing format.
-Sections: BACKGROUND, THEMES, INTERVENTION, RESULTS, LEARNING OUTCOMES.
+Sections: BACKGROUND, THEMES, INTERVENTION, RESULTS.
 Use clear section headers and professional prose throughout."""
 }
 
