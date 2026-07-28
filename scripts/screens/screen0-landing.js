@@ -11,8 +11,7 @@ export function initScreen0() {
       </div>
       <h1>Turn company data into <span class="accent">publish-ready</span> case studies.</h1>
       <p class="hero-sub">
-        Upload a PDF, describe the challenge, set preferences — CaseIQ drafts a
-        publisher-grade IFQM-structured case study in under 10 minutes, fully cited.
+        Upload reference materials, outline the core strategic challenge, and select your citation style — CaseIQ crafts a publisher-grade, academically structured business case study in minutes.
       </p>
       <div class="stat-pills">
         <div class="stat-pill"><span class="stat-dot rose"></span> Under 10 min generation</div>
@@ -48,10 +47,10 @@ export function initScreen0() {
     </div>
 
     <div class="landing-footer">
-      Built for IFQM Bangalore &amp; SRM Q Club · Powered by Gemini + RAG
+      Built for IFQM Banglore by <a href="https://vivabaranwal.vercel.app/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">Viva Baranwal</a>
     </div>`;
 
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
 
   document.getElementById('hero-start').addEventListener('click', () => showScreen(1));
   document.getElementById('hero-how').addEventListener('click', () => {
