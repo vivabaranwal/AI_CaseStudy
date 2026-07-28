@@ -1,0 +1,59 @@
+/* ── Screen 8: Export ───────────────────────────────────── */
+#screen-8 { min-height: 100vh; }
+
+.export-wrap {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: calc(100vh - 80px); padding: 60px 32px; text-align: center;
+  position: relative; z-index: 1;
+}
+
+.export-watermark {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  font-family: var(--font-heading); font-size: 120px; font-weight: 800;
+  color: var(--color-text-primary); opacity: 0.03;
+  pointer-events: none; filter: blur(2px); white-space: nowrap; user-select: none;
+  z-index: 0;
+}
+
+.export-success-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--color-success-dim); border: 2px solid var(--color-success);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-success); margin-bottom: 28px;
+  animation: checkmarkPop 0.5s ease; position: relative; z-index: 1;
+}
+.export-success-icon svg { width: 36px; height: 36px; }
+
+.export-heading {
+  font-family: var(--font-heading); font-size: 40px; font-weight: 800;
+  margin-bottom: 14px; position: relative; z-index: 1;
+}
+.export-sub {
+  font-size: 16px; color: var(--color-text-muted); max-width: 480px;
+  margin-bottom: 44px; line-height: 1.7; position: relative; z-index: 1;
+}
+
+.export-btns {
+  display: flex; flex-direction: column; gap: 14px; width: 100%;
+  max-width: 340px; position: relative; z-index: 1; margin-bottom: 36px;
+}
+.btn-export {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 32px; border-radius: var(--radius-full);
+  font-family: var(--font-heading); font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+}
+.btn-export:hover  { transform: scale(1.02); }
+.btn-export:active { transform: scale(0.97); }
+.btn-export.filled { background: var(--color-accent); color: var(--color-accent-text); border: none; }
+.btn-export.filled:hover { box-shadow: 0 0 24px var(--color-accent-glow); }
+.btn-export.outline { background: transparent; color: var(--color-text-primary); border: 0.5px solid var(--color-border); }
+.btn-export.outline:hover { border-color: rgba(244,167,185,0.4); color: var(--color-accent); }
+
+.export-footer { font-size: 12px; color: var(--color-text-muted); position: relative; z-index: 1; }
+
+@media (max-width: 768px) {
+  .export-heading { font-size: 28px; }
+  .export-watermark { font-size: 64px; }
+}
