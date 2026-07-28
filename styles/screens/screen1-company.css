@@ -1,0 +1,38 @@
+/* ── Screen 1: Company Identity ─────────────────────────── */
+
+/* Live preview card */
+.company-preview {
+  background: var(--color-surface); border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 28px 24px;
+  box-shadow: var(--shadow-card); position: sticky; top: 160px;
+}
+.co-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--color-accent); color: var(--color-accent-text);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-heading); font-size: 28px; font-weight: 800;
+  margin-bottom: 16px; transition: background var(--transition-base);
+  flex-shrink: 0;
+}
+.co-name {
+  font-family: var(--font-heading); font-size: 20px; font-weight: 700;
+  margin-bottom: 12px; min-height: 26px; transition: all var(--transition-base);
+}
+.co-name.empty { font-size: 14px; font-weight: 400; font-family: var(--font-body); color: var(--color-text-muted); }
+.co-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.co-tag {
+  padding: 4px 12px; border-radius: var(--radius-full);
+  font-size: 12px; background: var(--color-border); color: var(--color-text-muted);
+  transition: all var(--transition-base);
+}
+.co-tag.amber { background: var(--color-amber-dim); color: var(--color-amber); }
+.co-tag.rose  { background: var(--color-accent-dim); color: var(--color-accent); }
+
+.preview-hint {
+  font-size: 12px; color: var(--color-text-muted); font-style: italic;
+  margin-top: 20px; padding-top: 16px; border-top: 0.5px solid var(--color-border);
+  line-height: 1.6;
+}
+
+/* Two-input row (time period) */
+.input-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
