@@ -1,0 +1,69 @@
+# Implementation Requirements: Case Format & Citation Style
+
+This document outlines the detailed requirements for adding Case Format settings and expanding Citation Style options in the application (both frontend and backend).
+
+---
+
+## 1. Core Concepts & Definitions
+
+*   **Case Format:** Determines the overall writing style, section naming, narrative structure, protagonist introduction style, and exhibit placement of the generated document.
+*   **Citation Style:** Specifies how references and citations are formatted within the text (e.g., APA, Footnotes, etc.).
+
+---
+
+## 2. Frontend Requirements (Screen 4 - Preferences)
+
+### UI Layout & Controls
+On Screen 4, split the current single "Citation Style" card into two separate cards under the heading **"Case Format & Citation Style"**:
+
+#### **Card 1: Case Format**
+*   **Input Type:** Pill selector
+*   **Options:**
+    1.  `IFQM Standard` (Default) — Current default case structure.
+    2.  `HBS (Harvard Business School)` — Protagonist-led, decision-oriented, Exhibits at end.
+    3.  `IVEY (Ivey Business School)` — Emerging market / cross-cultural focus, Harvard citation inline.
+    4.  `IIMA (IIM Ahmedabad)` — Analytical, structured Q&A at end.
+    5.  `Custom` — Custom structure defined by user.
+
+#### **Card 2: Citation Style**
+*   **Input Type:** Dropdown selector
+*   **Options:**
+    1.  `APA 7th` (Default) — Standard academic format.
+    2.  `Harvard` — Business school standard.
+    3.  `Chicago 17th` — Humanities/business.
+    4.  `Footnote Style` — HBS style.
+    5.  `None` — No inline citations.
+
+### Auto-Switching Rules & Overrides
+Selecting a **Case Format** should automatically pre-select a matching **Citation Style**:
+*   Select **HBS** → Auto-switch Citation Style to **Footnote Style**
+*   Select **IVEY** → Auto-switch Citation Style to **Harvard**
+*   Select **IIMA** → Auto-switch Citation Style to **APA 7th**
+
+*Note: The user must still be able to manually override the citation style after the automatic switch occurs.*
+
+### State Management (`formState`)
+Update the `formState` object structure in the frontend application to include these fields:
+```javascript
+step4: {
+    ...existingFields,
+    caseFormat: 'ifqm',        // default value
+    citationStyle: 'apa7',     // updated default value
+}
+```
+
+---
+
+## 3. Backend Requirements (`generator.py`)
+
+Integrate the selected case format into the AI generation prompt. In `backend/generator.py`, define the specific system instructions for each case format and use them when compiling the generator's system prompt:
+
+```python
+FORMAT_PROMPTS = {
+    'hbs': "Follow Harvard Business School case format. Open with a named protagonist facing a specific decision at a precise moment in time. Use footnote citations. Place all data in numbered Exhibits at the end.",
+    'ivey': "Follow Ivey Business School format. Ground the case in emerging market or cross-cultural context. Use Harvard citation style inline. Include a clear decision point at the end.",
+    'iima': "Follow IIM Ahmedabad format. Use a structured analytical approach. Include discussion questions at the end of the case body. Use APA 7th edition citations.",
+    'ifqm': "Follow IFQM Standard format. Sections: Background, Themes, Intervention, Results, Learning Outcomes. Use APA 7th citations.",
+    'custom': "Follow the standard academic case writing format with clear section headers."
+}
+```
