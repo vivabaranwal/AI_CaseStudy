@@ -12,7 +12,7 @@ CaseIQ converts raw company research, uploaded PDFs, scraped web links, and stra
 
 ---
 
-## 🌟 Key Features & Capabilities
+##  Key Features & Capabilities
 
 - **6 Official Citation Styles**: Supported formats include **General (No Citation)**, **APA 7th Edition**, **APA 6th Edition**, **Harvard Referencing**, **Chicago 17th (Footnotes)**, and **MLA 9th Edition**.
 - **Dynamic Citation-Aware Section Ordering**: Automatically arranges section structures based on citation style guidelines:
@@ -25,7 +25,7 @@ CaseIQ converts raw company research, uploaded PDFs, scraped web links, and stra
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 graph TD
@@ -42,7 +42,7 @@ graph TD
 
 ---
 
-## 📁 Repository Clean Architecture
+## Repository Clean Architecture
 
 ```
 ai_casestudy/
@@ -84,7 +84,7 @@ ai_casestudy/
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## Quick Start (Local Development)
 
 ### 1. Backend Setup
 ```bash
@@ -112,7 +112,7 @@ python -m http.server 8080
 
 ---
 
-## 🌐 Production Deployment
+## Production Deployment
 
 ### Frontend (Vercel)
 - Connect this GitHub repository to [Vercel](https://vercel.com).
@@ -128,6 +128,6 @@ python -m http.server 8080
 
 ---
 
-## 👤 Author & Credits
+## Author & Credits
 
 Designed and developed for **IFQM Banglore** by **[Viva Baranwal](https://vivabaranwal.vercel.app/)**.
