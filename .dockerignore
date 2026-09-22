@@ -1,0 +1,9 @@
+.venv/
+.git/
+__pycache__/
+*.pyc
+archive/
+outputs/
+data/raw_cases/
+notebooks/
+mock/

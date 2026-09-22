@@ -2,10 +2,10 @@
 
 import chromadb
 from sentence_transformers import SentenceTransformer
-from config import CHROMA_PATH, CHROMA_COLLECTION, EMBED_MODEL
+from .config import CHROMA_PATH, CHROMA_COLLECTION, EMBED_MODEL
 
 client = chromadb.PersistentClient(path=CHROMA_PATH)
-collection = client.get_collection(CHROMA_COLLECTION)
+collection = client.get_or_create_collection(CHROMA_COLLECTION)
 embed_model = SentenceTransformer(EMBED_MODEL)
 
 def retrieve(query_text: str, n_results: int = 3) -> str:

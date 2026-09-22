@@ -1,6 +1,7 @@
 /* screens/screen7-preview.js */
 import { showScreen } from '../router.js';
 import { formState } from '../formState.js';
+import { CITATION_LABELS, LENGTH_LABELS, TONE_LABELS, labelFor } from '../labels.js';
 
 export function initScreen7() {
     const el = document.getElementById('screen-7');
@@ -35,7 +36,10 @@ export function initScreen7() {
     const summaryEl = document.getElementById('preview-summary');
     if (summaryEl) {
         const prefs = formState.step4 || {};
-        summaryEl.textContent = `${prefs.caseLength || 'Standard'} case \u00b7 ${prefs.tone || 'Academic'} tone \u00b7 ${prefs.citationStyle || 'APA'} citations`;
+        const lenLabel  = labelFor(LENGTH_LABELS,   prefs.caseLength,    'Standard');
+        const toneLabel = labelFor(TONE_LABELS,     prefs.tone,          'Academic');
+        const citeLabel = labelFor(CITATION_LABELS, prefs.citationStyle, 'General (No Citation)');
+        summaryEl.textContent = `${lenLabel} · ${toneLabel} tone · ${citeLabel}`;
     }
 
     // Wire download word button

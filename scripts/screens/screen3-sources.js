@@ -43,9 +43,13 @@ export function initScreen3() {
       <div class="card" style="margin-bottom:20px">
         <div class="src-section-hd">
           <span class="src-section-title">Upload Audio or Video</span>
+          <span class="src-badge-soon">Not yet transcribed</span>
         </div>
         <p style="font-size:13px;color:var(--color-text-muted);margin-bottom:12px">
-          Interview recordings, press conference footage, earnings call recordings
+          Interview recordings, press conference footage, earnings call recordings.
+          <strong>Audio and video are not transcribed yet</strong> — these files are
+          listed for your own reference only and are not sent to the AI. To include
+          their content, paste a transcript into the Transcript box below.
         </p>
         <div class="dropzone" id="s3-av-dz" style="min-height:100px">
           <input type="file" id="s3-av-inp" accept=".mp3,.mp4,.wav,.m4a,.webm" multiple />

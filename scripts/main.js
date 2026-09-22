@@ -9,6 +9,7 @@ import { initScreen5 } from './screens/screen5-review.js';
 import { initScreen6, startGeneration } from './screens/screen6-generation.js';
 import { initScreen7 } from './screens/screen7-preview.js';
 import { initScreen8 } from './screens/screen8-export.js';
+import { initAbout } from './about.js';
 
 async function boot() {
   // Init all static screens
@@ -34,6 +35,9 @@ async function boot() {
 
   // Export screen — init when user navigates from Screen 7
   document.addEventListener('caseiq:show-export-screen', () => initScreen8());
+
+  // Navbar "About" link — reuses the shared modal shell.
+  initAbout();
 
   // Start at screen 0
   initRouter();

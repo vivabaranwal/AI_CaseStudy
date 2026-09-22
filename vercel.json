@@ -1,32 +1,17 @@
 {
   "version": 2,
   "name": "caseiq",
-  "builds": [
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "headers": [
     {
-      "src": "backend/app.py",
-      "use": "@vercel/python"
+      "source": "/scripts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     },
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/generate-case/?",
-      "dest": "backend/app.py"
-    },
-    {
-      "src": "/export-pdf/?",
-      "dest": "backend/app.py"
-    },
-    {
-      "src": "/health",
-      "dest": "backend/app.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/styles/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     }
   ]
 }

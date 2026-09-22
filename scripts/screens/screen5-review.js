@@ -3,18 +3,12 @@ import { formState } from '../formState.js';
 import { showScreen } from '../router.js';
 import { startGeneration, stopGeneration } from './screen6-generation.js';
 import { API_BASE_URL } from '../config.js';
+import { CITATION_LABELS, LENGTH_LABELS, HOOK_LABELS } from '../labels.js';
 
 
-const LEN = { short:'Short (8 pages)', standard:'Standard (15 pages)', long:'Long (20+ pages)' };
-const HOOK = { cinematic:'Cinematic', statistical:'Statistical', question:'Question' };
-const citationLabels = {
-    'general': 'General (No Citation)',
-    'apa7': 'APA 7th Edition',
-    'apa6': 'APA 6th Edition',
-    'harvard': 'Harvard Referencing',
-    'chicago': 'Chicago 17th',
-    'mla': 'MLA 9th Edition'
-};
+const LEN = LENGTH_LABELS;
+const HOOK = HOOK_LABELS;
+const citationLabels = CITATION_LABELS;
 
 export function initScreen5() {
   const s1 = formState.step1;
@@ -82,7 +76,7 @@ export function initScreen5() {
           ${_kv('Tone',         s4.tone)}
           ${_kv('Teaching Note',s4.includeTeachingNote ? 'Yes' : 'No')}
           ${_kv('Citations',    citationDisplay)}
-          ${_kv('Sec. Approval',s4.sectionApproval     ? 'On'  : 'Off')}
+          ${_kv('Review First',  s4.sectionApproval     ? 'Yes' : 'No')}
           ${_kv('Hook Style',   HOOK[s4.hookStyle] || s4.hookStyle)}
           ${_kv('Language',     s4.language)}
         </div>
@@ -137,9 +131,14 @@ export function initScreen5() {
     payload.append('preferences', JSON.stringify(formState.step4));
     payload.append('urls', JSON.stringify(formState.step3.manualURLs || []));
 
-    if (formState.step2.uploadedFiles && formState.step2.uploadedFiles[0]) {
-        payload.append('file', formState.step2.uploadedFiles[0]);
-    }
+    // Send every uploaded document. The backend reads the `files` list and
+    // extracts text from PDF, .txt and .docx. Audio/video are not transcribed,
+    // so they are excluded here rather than uploaded and silently dropped.
+    const documents = [
+        ...(formState.step3.manualPDFs || []),
+        ...(formState.step3.transcriptFiles || [])
+    ];
+    documents.forEach(f => payload.append('files', f));
 
     try {
         const response = await fetch(`${API_BASE_URL}/generate-case/`, {
@@ -185,18 +184,25 @@ export function initScreen5() {
         // Stop generation visual loops
         stopGeneration();
 
-        // Dispatch show-export event to initialize screen 7 content
-        document.dispatchEvent(new CustomEvent('caseiq:show-export'));
-
-        // Navigate to Screen 7 (preview/success)
-        showScreen(7);
+        // "Review Before Export" (step4.sectionApproval): when on, stop at the
+        // preview screen; when off, go straight to the export options.
+        if (formState.step4.sectionApproval) {
+            document.dispatchEvent(new CustomEvent('caseiq:show-export'));
+            showScreen(7);
+        } else {
+            document.dispatchEvent(new CustomEvent('caseiq:show-export-screen'));
+            showScreen(8);
+        }
 
     } catch (error) {
         console.error('Generation failed:', error);
         stopGeneration();
         showScreen(5);
         if (errDiv) {
-            errDiv.textContent = 'Generation failed. Make sure backend is running at 127.0.0.1:8000';
+            const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+            errDiv.textContent = isLocal
+                ? 'Generation failed. Make sure the backend is running at 127.0.0.1:8000.'
+                : 'Generation failed. The service is temporarily unavailable — please try again shortly.';
         }
         btn.disabled = false;
     }

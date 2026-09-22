@@ -1,9 +1,17 @@
 services:
   - type: web
     name: caseiq-backend
-    env: python
+    runtime: python
+    plan: starter
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     envVars:
       - key: GEMINI_API_KEY
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: OUTPUTS_DIR
+        value: /tmp/outputs
+      - key: CORS_ORIGINS
         sync: false

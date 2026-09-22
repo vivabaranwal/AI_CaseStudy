@@ -51,6 +51,7 @@ Example Works Cited: Tata, Ratan. Leadership at Scale. Penguin India, 2022.""",
 }
 
 SECTION_STRUCTURES = {
+    # "general" is the no-citation option, so it intentionally has no REFERENCES.
     "general": [
         "BACKGROUND",
         "CHALLENGE",
@@ -61,37 +62,45 @@ SECTION_STRUCTURES = {
         "RECOMMENDATIONS",
         "FUTURE SCOPE"
     ],
+    # Cited styles all end with REFERENCES so the chosen citation style
+    # actually produces a reference list.
     "apa7": [
         "BACKGROUND",
         "THEMES",
         "INTERVENTION",
         "RESULTS",
+        "REFERENCES",
     ],
     "apa6": [
         "BACKGROUND",
         "THEMES",
         "INTERVENTION",
         "RESULTS",
+        "REFERENCES",
     ],
     "harvard": [
         "BACKGROUND",
         "THEMES",
         "INTERVENTION",
         "RESULTS",
+        "REFERENCES",
     ],
     "chicago": [
         "BACKGROUND",
         "THEMES",
         "INTERVENTION",
         "RESULTS",
+        "REFERENCES",
     ],
     "mla": [
         "BACKGROUND",
         "THEMES",
         "INTERVENTION",
         "RESULTS",
+        "REFERENCES",
     ]
 }
+
 
 LENGTH_TARGETS = {
     "short": {
@@ -156,7 +165,7 @@ TONE_PROMPTS = {
     "academic": "Write in formal academic prose. Use passive voice where appropriate. Maintain analytical distance. Avoid contractions.",
     "semi-academic": "Write in clear, readable academic prose. Active voice preferred. Accessible to advanced undergraduates.",
     "consulting": "Write in structured consulting style. Use clear section headers, concise paragraphs, and data-driven observations. Think McKinsey case document.",
-    "business style": "Write in professional business narrative style. Engaging, clear, direct. Suitable for executive education.",
+    "business-style": "Write in professional business narrative style. Engaging, clear, direct. Suitable for executive education.",
     "none": "Write in clear neutral prose appropriate for the subject matter."
 }
 

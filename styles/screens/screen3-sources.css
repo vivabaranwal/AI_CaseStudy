@@ -42,3 +42,18 @@
 }
 
 .sources-footer { font-size: 13px; color: var(--color-text-muted); margin-top: 20px; padding-top: 16px; border-top: 0.5px solid var(--color-border); }
+
+/* Badge for features that are present in the UI but not yet functional. */
+.src-badge-soon {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #8a6d1f;
+  background: rgba(240, 190, 60, 0.16);
+  border: 1px solid rgba(240, 190, 60, 0.35);
+  vertical-align: middle;
+  white-space: nowrap;
+}

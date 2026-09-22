@@ -77,62 +77,8 @@ function _buildRows() {
 
 let _generationPromise = null;
 
-async function _triggerBackendCall() {
-  const termBody = document.getElementById('term-body');
-  const printLog = (text) => {
-    if (!termBody) return;
-    const div = document.createElement('div');
-    div.className = 'term-line';
-    div.innerHTML = `<span class="term-time">[${new Date().toLocaleTimeString()}]</span> ${text}`;
-    termBody.appendChild(div);
-    termBody.scrollTop = termBody.scrollHeight;
-  };
-
-  printLog("<span class='term-cyan'>[API] Sending generation request to http://127.0.0.1:8000/generate-case/...</span>");
-
-  try {
-    const payload = new FormData();
-    payload.append('company_name', formState.step1.companyName);
-    payload.append('challenge_text', formState.step2.challengeText);
-    payload.append('preferences', JSON.stringify(formState.step4));
-
-    if (formState.step2.uploadedFiles && formState.step2.uploadedFiles[0]) {
-      payload.append('file', formState.step2.uploadedFiles[0]);
-      printLog(`[API] Attached uploaded file: ${formState.step2.uploadedFiles[0].name}`);
-    } else if (formState.step3.manualPDFs && formState.step3.manualPDFs.length > 0) {
-      payload.append('file', formState.step3.manualPDFs[0]);
-      printLog(`[API] Attached source PDF: ${formState.step3.manualPDFs[0].name}`);
-    }
-
-    const response = await fetch('http://127.0.0.1:8000/generate-case/', {
-      method: 'POST',
-      body: payload
-    });
-
-    if (!response.ok) {
-      throw new Error(`Backend error: ${response.status}`);
-    }
-
-    const blob = await response.blob();
-    const downloadUrl = URL.createObjectURL(blob);
-
-    // Store the download URL in formState for Screen 8 export
-    formState.generatedFileUrl = downloadUrl;
-    formState.generatedFileName = `${formState.step1.companyName}_case_study.docx`;
-
-    printLog("<span class='term-green'>[API] .docx received and ready for download.</span>");
-
-  } catch (error) {
-    formState.generatedFileUrl = null;
-    formState.generatedFileName = null;
-    const statusEl = document.getElementById('generation-status');
-    if (statusEl) {
-      statusEl.innerText = 'Generation failed. Make sure the backend server is running at 127.0.0.1:8000.';
-    }
-    printLog(`<span class='term-red'>[API ERROR] ${error.message}. Check that uvicorn is running.</span>`);
-    console.error('Backend fetch error:', error);
-  }
-}
+// NOTE: generation is performed by screen5-review.js via API_BASE_URL.
+// This screen only renders progress; _generationPromise stays null unless set there.
 
 export function startGeneration() {
   _genIdx = 0;
@@ -228,8 +174,19 @@ async function _finish() {
   lucide.createIcons();
   setTimeout(() => {
     overlay?.classList.remove('show');
-    document.dispatchEvent(new CustomEvent('caseiq:show-export'));
-    showScreen(8);  // skip preview — go straight to export
+    // Screen 5 advances to the preview once the real response lands. Only take
+    // over here if it hasn't (e.g. the animation outlived the request path).
+    const previewActive = document.getElementById('screen-7')?.classList.contains('active');
+    const exportActive  = document.getElementById('screen-8')?.classList.contains('active');
+    if (!previewActive && !exportActive) {
+      if (formState.step4.sectionApproval) {
+        document.dispatchEvent(new CustomEvent('caseiq:show-export'));
+        showScreen(7);
+      } else {
+        document.dispatchEvent(new CustomEvent('caseiq:show-export-screen'));
+        showScreen(8);
+      }
+    }
   }, 1800);
 }
 

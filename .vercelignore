@@ -1,0 +1,13 @@
+# Frontend deploy only needs index.html, scripts/, styles/
+backend/
+data/
+archive/
+outputs/
+notebooks/
+tools/
+mock/
+.venv/
+requirements.txt
+render.yaml
+*.pyc
+__pycache__/

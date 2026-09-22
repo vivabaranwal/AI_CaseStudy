@@ -8,7 +8,7 @@ from docx.oxml import OxmlElement
 import os
 import re
 from datetime import datetime
-from config import OUTPUTS_DIR
+from .config import OUTPUTS_DIR
 
 SECTION_HEADERS = [
     'BACKGROUND',

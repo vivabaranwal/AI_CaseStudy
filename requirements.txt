@@ -1,12 +1,21 @@
-fastapi
-uvicorn
-pdfplumber
-python-docx
-chromadb
-sentence-transformers
-openai
-httpx
-beautifulsoup4
-lxml
-python-dotenv
-docx2pdf
+# CPU-only torch: avoids pulling the multi-GB CUDA build on the server.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.12.1
+
+fastapi==0.138.2
+uvicorn[standard]==0.49.0
+pdfplumber==0.11.10
+python-docx==1.2.0
+chromadb==1.5.9
+sentence-transformers==5.6.0
+openai==2.44.0
+httpx==0.28.1
+beautifulsoup4==4.15.0
+lxml==6.1.1
+python-dotenv==1.2.2
+python-multipart==0.0.32
+slowapi==0.1.10
+
+# Windows/macOS only (requires Microsoft Word). On Linux the server uses
+# LibreOffice via _convert_to_pdf(); do not install there.
+docx2pdf==0.1.8; sys_platform != "linux"

@@ -18,8 +18,8 @@ const PREFS = [
       { label: 'Chicago 17th (Footnotes)', value: 'chicago' },
       { label: 'MLA 9th Edition', value: 'mla' }
     ] },
-  { key: 'sectionApproval', label: 'Section-by-Section Approval', type: 'toggle',
-    desc: 'Approve each section before AI moves to the next. Turn off for fully automatic generation.' },
+  { key: 'sectionApproval', label: 'Review Before Export', type: 'toggle',
+    desc: 'Stop at the preview screen to read the case study before downloading. Turn off to go straight to export options.' },
   { key: 'hookStyle', label: 'Opening Hook Style', type: 'pills', desc: 'Cinematic: in-the-room moment. Statistical: striking number. Question: provocation.',
     opts: [{v:'cinematic',l:'Cinematic'},{v:'statistical',l:'Statistical'},{v:'question',l:'Question'}] },
   { key: 'language', label: 'Language', type: 'select', desc: 'Language and register of the generated case study.',

@@ -119,7 +119,7 @@ function _bind1() {
       formState.step4.caseLength = "standard";
       formState.step4.tone = "academic";
       formState.step4.includeTeachingNote = true;
-      formState.step4.citationStyle = "APA";
+      formState.step4.citationStyle = "apa7";
       formState.step4.sectionApproval = false;
       formState.step4.hookStyle = "cinematic";
       formState.step4.language = "english-academic";
